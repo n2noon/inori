@@ -36,7 +36,7 @@ impl<'a> ArtistData {
             }
         }
     }
-    pub fn contents(&'a self) -> Vec<TrackSelItem> {
+    pub fn contents(&'a self) -> Vec<TrackSelItem<'a>> {
         let mut new: Vec<TrackSelItem> = Vec::new();
         let mut i = 0; // full index
         for album in &self.albums {
