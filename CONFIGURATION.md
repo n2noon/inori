@@ -48,7 +48,7 @@ where a `"KEYSTR"` describes a keybinding with the following format that
 will be reminiscent to emacs users:
 
 ```
-KEYSTR := <KEYBIND> <KEYSTR> | ""
+KEYSTR := <KEYBIND> <KEYSTR> | <KEYBIND>
 KEYBIND := <MODIFIER><CHARACTER>
 MODIFIER := C- | M- | S- | C-M- | ""
 CHARACTER := char | <SPECIAL_KEY>
