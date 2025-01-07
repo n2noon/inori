@@ -8,9 +8,11 @@ rustPlatform.buildRustPackage {
   cargoLock.lockFile = ../../Cargo.lock;
 
   meta = with lib; {
-    description = "inori client for the Music Player Daemon (MPD)";
+    description = "Client for the Music Player Daemon (MPD)";
+    homepage = "https://github.com/eshrh/inori";
     license = licenses.gpl3Only;
     platforms = platforms.all;
+    mainProgram = "inori";
     maintainers = with maintainers; [ stephen-huan ];
   };
 }
