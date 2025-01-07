@@ -2,7 +2,7 @@
 
 rustPlatform.buildRustPackage {
   pname = "inori";
-  version = "0.2.1";
+  version = "0.2.2";
   src = ../..;
 
   cargoLock.lockFile = ../../Cargo.lock;
