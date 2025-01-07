@@ -280,6 +280,8 @@ pub fn parse_keybind(s: String) -> Result<Vec<KeyEvent>> {
                     .unwrap_or_else(|| panic!("couldn't parse {}", word)),
                 KeyModifiers::CONTROL | KeyModifiers::META,
             ))
+        } else if word.is_empty() {
+            panic!("empty keybind is not allowed")
         } else {
             out.push(KeyEvent::new(
                 parse_keybind_single(word)
