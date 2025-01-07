@@ -114,19 +114,19 @@ Colors should be specified in a table called "theme", like this:
 
 ```toml
 [theme.item_to_color]
-fg = COLOR
-bg = COLOR
-add_modifier = MODIFIERS
-sub_modifier = MODIFIERS
+fg = "<COLOR>"
+bg = "<COLOR>"
+add_modifier = "<MODIFIERS>"
+sub_modifier = "<MODIFIERS>"
 ```
 
-All fields are optional. `COLOR` should be **a string** of either
+All fields are optional. `<COLOR>` should be one of
 
-- rgb hex: "#FF0000"
-- [ansi escape index](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit): "9"
-- ansi color code: "White", "Red", "LightCyan", etc
+- rgb hex: `#FF0000`
+- [ansi escape index](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit): `9`
+- ansi color code: `White`, `Red`, `LightCyan`, etc
 
-`MODIFIERS` should be a string of "\<MODIFIER\>" joined by "|"
+`<MODIFIERS>` should be modifiers joined by "|"
 characters. The available modifiers are
 
 - BOLD
