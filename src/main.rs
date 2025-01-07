@@ -13,6 +13,7 @@ use ratatui::{
 };
 use std::io::stdout;
 use update::Update;
+use std::panic;
 mod config;
 mod event_handler;
 mod model;
@@ -27,8 +28,13 @@ fn main() -> Result<()> {
     let mut terminal = Terminal::new(CrosstermBackend::new(stdout()))?;
     terminal.clear()?;
 
-    let mut model = model::Model::new().expect("Failed to init.");
+    let hook = panic::take_hook();
+    panic::set_hook(Box::new(move |panic| {
+        reset_terminal().expect("Failed to reset the terminal.");
+        hook(panic);
+    }));
 
+    let mut model = model::Model::new().expect("Failed to init.");
     update::update_tick(&mut model)?;
     update::update_screens(&mut model, Update::empty())?;
     terminal.draw(|f| view::view(&mut model, f))?;
@@ -47,7 +53,11 @@ fn main() -> Result<()> {
             break;
         }
     }
+    reset_terminal().expect("Failed to reset terminal.");
+    Ok(())
+}
 
+fn reset_terminal() -> Result<()> {
     stdout().execute(LeaveAlternateScreen)?;
     disable_raw_mode()?;
     Ok(())
