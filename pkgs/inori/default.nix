@@ -11,7 +11,7 @@ rustPlatform.buildRustPackage {
     description = "Client for the Music Player Daemon (MPD)";
     homepage = "https://github.com/eshrh/inori";
     license = licenses.gpl3Only;
-    platforms = platforms.all;
+    platforms = platforms.unix ++ platforms.windows;
     mainProgram = "inori";
     maintainers = with maintainers; [ stephen-huan ];
   };
