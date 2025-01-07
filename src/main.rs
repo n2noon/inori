@@ -12,8 +12,8 @@ use ratatui::{
     Terminal,
 };
 use std::io::stdout;
-use update::Update;
 use std::panic;
+use update::Update;
 mod config;
 mod event_handler;
 mod model;
