@@ -118,11 +118,8 @@ pub struct Model {
 
 impl Model {
     pub fn new() -> Result<Self> {
-        let mpd_url = format!(
-            "{}:{}",
-            env::var("MPD_HOST").unwrap_or_else(|_| "localhost".to_string()),
-            env::var("MPD_PORT").unwrap_or_else(|_| "6600".to_string())
-        );
+        let config = Config::default().try_read_config();
+        let mpd_url = &config.mpd_address;
         let mut conn = Client::connect(mpd_url.clone()).unwrap_or_else(|_| {
             panic!("Failed to connect to mpd server at {}", mpd_url)
         });
@@ -140,7 +137,7 @@ impl Model {
                 default_config.prefer_prefix = true;
                 Matcher::new(default_config)
             },
-            config: Config::default().try_read_config(),
+            config,
             parse_state: Vec::new(),
             window_height: Some(100),
         })
