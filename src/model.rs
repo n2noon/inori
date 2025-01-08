@@ -4,7 +4,6 @@ use mpd::{Client, Song, Status};
 use nucleo_matcher::{Matcher, Utf32String};
 use ratatui::crossterm::event::KeyEvent;
 use ratatui::widgets::*;
-use std::env;
 mod impl_album_song;
 mod impl_artiststate;
 mod impl_library;
