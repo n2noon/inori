@@ -11,6 +11,10 @@ defaulting to `$HOME/.config/inori/config.toml` if it is not set.
   - The host and port to check for mpd. Alternatively you can set the
     `MPD_HOST` and `MPD_PORT` environment variables. Note that the
     configuration option currently has precedence.
+- `seek_seconds`
+  - Type: 64-bit integer
+  - Default: 5
+  - The time in seconds to seek by when using the `seek` and `seek_backwards` command
 
 ## Keybindings
 
