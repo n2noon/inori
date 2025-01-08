@@ -281,22 +281,22 @@ pub fn parse_keybind(s: String) -> Result<Vec<KeyEvent>> {
     for word in s.split(' ') {
         if let Some(keycode) = word
             .strip_prefix("C-")
-            .and_then(|suffix| parse_keybind_single(suffix))
+            .and_then(parse_keybind_single)
         {
             out.push(KeyEvent::new(keycode, KeyModifiers::CONTROL))
         } else if let Some(keycode) = word
             .strip_prefix("M-")
-            .and_then(|suffix| parse_keybind_single(suffix))
+            .and_then(parse_keybind_single)
         {
             out.push(KeyEvent::new(keycode, KeyModifiers::META))
         } else if let Some(keycode) = word
             .strip_prefix("S-")
-            .and_then(|suffix| parse_keybind_single(suffix))
+            .and_then(parse_keybind_single)
         {
             out.push(KeyEvent::new(keycode, KeyModifiers::SUPER))
         } else if let Some(keycode) = word
             .strip_prefix("C-M-")
-            .and_then(|suffix| parse_keybind_single(suffix))
+            .and_then(parse_keybind_single)
         {
             out.push(KeyEvent::new(
                 keycode,
