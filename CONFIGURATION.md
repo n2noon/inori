@@ -3,6 +3,15 @@
 Config file is read from `$XDG_CONFIG_HOME/inori/config.toml`,
 defaulting to `$HOME/.config/inori/config.toml` if it is not set.
 
+## General
+
+- `mpd_address`
+  - Type: String 
+  - Default: `localhost:6600` 
+  - The host and port to check for mpd. Alternatively you can set the
+    `MPD_HOST` and `MPD_PORT` environment variables. Note that the
+    configuration option currently has precedence.
+
 ## Keybindings
 
 ### Keybinding sets
