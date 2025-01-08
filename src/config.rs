@@ -53,21 +53,22 @@ impl Config {
         for (key, value) in t {
             match (get_message(&key), value) {
                 (Some(m), Value::String(s)) => {
-                    let keybinds = keybind::parse_keybind(s)
-                        .unwrap_or_else(|_| panic!("Couldn't parse keybinds"));
+                    let keybinds = keybind::parse_keybind(s).unwrap();
                     self.keybindings.insert(m.clone(), &keybinds);
-                },
+                }
                 (Some(m), Value::Array(a)) => {
                     for s in a {
                         if let Value::String(s) = s {
-                            let keybinds = keybind::parse_keybind(s)
-                                .unwrap_or_else(|_| panic!("Couldn't parse keybinds"));
+                            let keybinds = keybind::parse_keybind(s).unwrap();
                             self.keybindings.insert(m.clone(), &keybinds);
                         } else {
-                            panic!("keybind {} for command {} must be a string", s, key)
+                            panic!(
+                                "keybind {} for command {} must be a string",
+                                s, key
+                            )
                         }
                     }
-                },
+                }
                 (Some(_), other) => panic!(
                     "keybind {} for command {} must be a string or an array",
                     other, key

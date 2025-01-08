@@ -4,6 +4,7 @@ use crate::update::Message::{self, *};
 use crate::update::*;
 use ratatui::crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
 use std::collections::HashMap;
+use std::fmt;
 
 pub enum KeybindTarget {
     Map(KeybindMap),
@@ -253,41 +254,60 @@ pub fn parse_keybind_single(s: &str) -> Option<KeyCode> {
         }
     }
 }
+
+#[derive(Debug)]
+pub enum KeybindParseError {
+    EmptyKeybindParseError,
+    ParseError(String),
+}
+
+impl std::error::Error for KeybindParseError {}
+
+impl fmt::Display for KeybindParseError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Self::EmptyKeybindParseError => {
+                write!(f, "empty keybind not allowed")
+            }
+            Self::ParseError(input) => {
+                write!(f, "failed to parse keybind {}", input)
+            }
+        }
+    }
+}
+
 pub fn parse_keybind(s: String) -> Result<Vec<KeyEvent>> {
     let mut out: Vec<KeyEvent> = Vec::new();
     for word in s.split(' ') {
-        if let Some(suffix) = word.strip_prefix("C-") {
+        if let Some(keycode) = word
+            .strip_prefix("C-")
+            .and_then(|suffix| parse_keybind_single(suffix))
+        {
+            out.push(KeyEvent::new(keycode, KeyModifiers::CONTROL))
+        } else if let Some(keycode) = word
+            .strip_prefix("M-")
+            .and_then(|suffix| parse_keybind_single(suffix))
+        {
+            out.push(KeyEvent::new(keycode, KeyModifiers::META))
+        } else if let Some(keycode) = word
+            .strip_prefix("S-")
+            .and_then(|suffix| parse_keybind_single(suffix))
+        {
+            out.push(KeyEvent::new(keycode, KeyModifiers::SUPER))
+        } else if let Some(keycode) = word
+            .strip_prefix("C-M-")
+            .and_then(|suffix| parse_keybind_single(suffix))
+        {
             out.push(KeyEvent::new(
-                parse_keybind_single(suffix)
-                    .unwrap_or_else(|| panic!("couldn't parse {}", word)),
-                KeyModifiers::CONTROL,
-            ))
-        } else if let Some(suffix) = word.strip_prefix("M-") {
-            out.push(KeyEvent::new(
-                parse_keybind_single(suffix)
-                    .unwrap_or_else(|| panic!("couldn't parse {}", word)),
-                KeyModifiers::META,
-            ))
-        } else if let Some(suffix) = word.strip_prefix("S-") {
-            out.push(KeyEvent::new(
-                parse_keybind_single(suffix)
-                    .unwrap_or_else(|| panic!("couldn't parse {}", word)),
-                KeyModifiers::SUPER,
-            ))
-        } else if let Some(suffix) = word.strip_prefix("C-M-") {
-            out.push(KeyEvent::new(
-                parse_keybind_single(suffix)
-                    .unwrap_or_else(|| panic!("couldn't parse {}", word)),
+                keycode,
                 KeyModifiers::CONTROL | KeyModifiers::META,
             ))
+        } else if let Some(keycode) = parse_keybind_single(word) {
+            out.push(KeyEvent::new(keycode, EMPTY))
         } else if word.is_empty() {
-            panic!("empty keybind is not allowed")
+            return Err(Box::new(KeybindParseError::EmptyKeybindParseError));
         } else {
-            out.push(KeyEvent::new(
-                parse_keybind_single(word)
-                    .unwrap_or_else(|| panic!("couldn't parse {}", word)),
-                KeyModifiers::empty(),
-            ))
+            return Err(Box::new(KeybindParseError::ParseError(word.into())));
         }
     }
     Ok(out)
