@@ -186,11 +186,12 @@ dependencies = [
 
 [[package]]
 name = "inori-mpd"
-version = "0.1.0"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9d7bf083ae3b28823a8b8f63bbe34b457277e9e189d9d2685ba0a57c39a2d76a"
+checksum = "f31391ec04027731d39b94cc57c9a617a16ea0b7e6f84f2c532e0a94cf232d0d"
 dependencies = [
  "bufstream",
+ "dirs",
  "itertools",
 ]
 

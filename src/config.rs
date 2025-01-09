@@ -2,7 +2,6 @@ extern crate dirs;
 use crate::model::*;
 use crate::view::Theme;
 use ratatui::style::Style;
-use std::env;
 use std::fs;
 use std::path::PathBuf;
 use toml::Table;
@@ -14,7 +13,7 @@ pub struct Config {
     pub keybindings: KeybindMap,
     pub theme: Theme,
     pub seek_seconds: i64,
-    pub mpd_address: String,
+    pub mpd_address: Option<String>,
 }
 
 impl Config {
@@ -23,11 +22,7 @@ impl Config {
             keybindings: KeybindMap::default(),
             theme: Theme::new(),
             seek_seconds: 5,
-            mpd_address: format!(
-                "{}:{}",
-                env::var("MPD_HOST").unwrap_or_else(|_| "localhost".to_string()),
-                env::var("MPD_PORT").unwrap_or_else(|_| "6600".to_string())
-            ),
+            mpd_address: None
         }
     }
     pub fn try_read_config(mut self) -> Self {
@@ -51,7 +46,7 @@ impl Config {
                         self.keybindings = self.keybindings.with_qwerty_style();
                     }
                     ("mpd_address", Value::String(addr)) => {
-                        self.mpd_address = addr;
+                        self.mpd_address = Some(addr);
                     }
                     (_k, _v) => panic!("unknown key {} or value {}", _k, _v),
                 }

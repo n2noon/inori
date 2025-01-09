@@ -101,10 +101,11 @@ pub struct QueueSelector {
     pub state: TableState,
 }
 
+
 pub struct Model {
     pub state: State,
     pub status: Status,
-    pub conn: Client,
+    pub conn: Client<mpd::client::StreamTypes>,
     pub screen: Screen,
     pub library: LibraryState,
     pub queue: QueueSelector,
@@ -118,11 +119,11 @@ pub struct Model {
 impl Model {
     pub fn new() -> Result<Self> {
         let config = Config::default().try_read_config();
-        let mpd_url = &config.mpd_address;
-        let mut conn = Client::connect(mpd_url.clone()).unwrap_or_else(|_| {
-            panic!("Failed to connect to mpd server at {}", mpd_url)
-        });
-
+        let mut conn = if let Some(mpd_url) = &config.mpd_address {
+            Client::<mpd::client::StreamTypes>::connect(mpd_url).unwrap()
+        } else {
+            Client::<mpd::client::StreamTypes>::default()
+        };
         Ok(Model {
             state: State::Running,
             status: conn.status()?,
