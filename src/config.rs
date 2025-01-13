@@ -1,6 +1,7 @@
 extern crate dirs;
 use crate::model::*;
 use crate::view::Theme;
+use ratatui::style::Modifier;
 use ratatui::style::Style;
 use std::fs;
 use std::path::PathBuf;
@@ -22,7 +23,7 @@ impl Config {
             keybindings: KeybindMap::default(),
             theme: Theme::new(),
             seek_seconds: 5,
-            mpd_address: None
+            mpd_address: None,
         }
     }
     pub fn try_read_config(mut self) -> Self {
@@ -133,12 +134,38 @@ impl Config {
     }
 }
 
+fn modifiers_arr(modifiers: &Vec<Value>) -> String {
+    let mut m = String::new();
+    for i in modifiers {
+        if let Value::String(s) = i {
+            if Modifier::from_name(s).is_some() {
+                if !m.is_empty() {
+                    m.push('|');
+                }
+                m.push_str(s);
+            } else {
+                panic!(
+                    "Error while parsing theme modifier array: unknown modifier \"{}\""
+                    ,s
+                )
+            }
+        }
+    }
+    m
+}
+
 pub fn deserialize_style(mut t: Table) -> Style {
     if !t.contains_key("add_modifier") {
         t.insert("add_modifier".into(), Value::String("".into()));
     }
     if !t.contains_key("sub_modifier") {
         t.insert("sub_modifier".into(), Value::String("".into()));
+    }
+    if let Value::Array(a) = t.get("add_modifier").unwrap() {
+        t.insert("add_modifier".into(), Value::String(modifiers_arr(a)));
+    }
+    if let Value::Array(a) = t.get("sub_modifier").unwrap() {
+        t.insert("sub_modifier".into(), Value::String(modifiers_arr(a)));
     }
     t.try_into().expect("Style parse failure")
 }
