@@ -101,7 +101,6 @@ pub struct QueueSelector {
     pub state: TableState,
 }
 
-
 pub struct Model {
     pub state: State,
     pub status: Status,

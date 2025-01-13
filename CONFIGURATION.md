@@ -6,8 +6,8 @@ defaulting to `$HOME/.config/inori/config.toml` if it is not set.
 ## General
 
 - `mpd_address`
-  - Type: String 
-  - Default: `localhost:6600` 
+  - Type: String
+  - Default: `localhost:6600`
   - The host and port to check for mpd. Alternatively you can set the
     `MPD_HOST` and `MPD_PORT` environment variables. Note that the
     configuration option currently has precedence.
@@ -67,7 +67,7 @@ MODIFIER := C- | M- | S- | C-M- | ""
 CHARACTER := char | <SPECIAL_KEY>
 SPECIAL_KEY := <space>
   | <tab>
-  | <esc>
+  | <escape>
   | <backspace>
   | <delete>
   | <up>

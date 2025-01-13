@@ -239,7 +239,8 @@ pub fn parse_keybind_single(s: &str) -> Option<KeyCode> {
     } else {
         match s {
             "<space>" => Some(KeyCode::Char(' ')),
-            "<esc>" => Some(KeyCode::Esc),
+            "<esc>" => Some(KeyCode::Esc), // deprecated
+            "<escape>" => Some(KeyCode::Esc),
             "<tab>" => Some(KeyCode::Tab),
             "<backspace>" => Some(KeyCode::Backspace),
             "<delete>" => Some(KeyCode::Delete),
@@ -279,24 +280,20 @@ impl fmt::Display for KeybindParseError {
 pub fn parse_keybind(s: String) -> Result<Vec<KeyEvent>> {
     let mut out: Vec<KeyEvent> = Vec::new();
     for word in s.split(' ') {
-        if let Some(keycode) = word
-            .strip_prefix("C-")
-            .and_then(parse_keybind_single)
+        if let Some(keycode) =
+            word.strip_prefix("C-").and_then(parse_keybind_single)
         {
             out.push(KeyEvent::new(keycode, KeyModifiers::CONTROL))
-        } else if let Some(keycode) = word
-            .strip_prefix("M-")
-            .and_then(parse_keybind_single)
+        } else if let Some(keycode) =
+            word.strip_prefix("M-").and_then(parse_keybind_single)
         {
             out.push(KeyEvent::new(keycode, KeyModifiers::META))
-        } else if let Some(keycode) = word
-            .strip_prefix("S-")
-            .and_then(parse_keybind_single)
+        } else if let Some(keycode) =
+            word.strip_prefix("S-").and_then(parse_keybind_single)
         {
             out.push(KeyEvent::new(keycode, KeyModifiers::SUPER))
-        } else if let Some(keycode) = word
-            .strip_prefix("C-M-")
-            .and_then(parse_keybind_single)
+        } else if let Some(keycode) =
+            word.strip_prefix("C-M-").and_then(parse_keybind_single)
         {
             out.push(KeyEvent::new(
                 keycode,
