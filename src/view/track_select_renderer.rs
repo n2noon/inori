@@ -82,7 +82,7 @@ fn get_track_data<'a>(
             .collect::<Vec<Row>>();
         Table::new::<Vec<Row>, Vec<Constraint>>(items, vec![Min(10), Max(9)])
     } else {
-        return Table::new::<Vec<Row>, Vec<u16>>(vec![], vec![]);
+        Table::new::<Vec<Row>, Vec<u16>>(vec![], vec![])
     }
 }
 

@@ -227,7 +227,7 @@ impl<'a> From<&'a Song> for TrackSelItem<'a> {
     }
 }
 
-impl<'a> TrackSelItem<'a> {
+impl TrackSelItem<'_> {
     pub fn rank(mut self, val: Option<usize>) -> Self {
         self.rank = val;
         self
