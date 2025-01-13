@@ -170,10 +170,7 @@ pub fn handle_msg(model: &mut Model, m: Message) -> Result<Update> {
             Ok(Update::empty())
         }
         Message::SwitchScreen(to) => {
-            model.screen = match to {
-                Screen::Library => Screen::Library,
-                Screen::Queue => Screen::Queue,
-            };
+            model.screen = to;
             Ok(Update::empty())
         }
         Message::PlayPause => {
@@ -195,8 +192,6 @@ pub fn handle_msg(model: &mut Model, m: Message) -> Result<Update> {
             }
         },
         Message::Seek(direction) => {
-            let mut update_flags = Update::empty();
-
             if let (Some((current_pos, total)), Some(queue_pos)) =
                 (model.status.time, model.status.song)
             {
@@ -213,13 +208,14 @@ pub fn handle_msg(model: &mut Model, m: Message) -> Result<Update> {
 
                 if new_pos >= total {
                     model.conn.next()?;
-                    update_flags |= Update::CURRENT_SONG | Update::STATUS;
+                    Ok(Update::CURRENT_SONG | Update::STATUS)
                 } else {
                     model.conn.seek(queue_pos.pos, new_pos)?;
-                    update_flags |= Update::STATUS;
+                    Ok(Update::STATUS)
                 }
+            } else {
+                Ok(Update::empty())
             }
-            Ok(update_flags)
         }
         Message::Set(t) => {
             match t {
