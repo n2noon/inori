@@ -85,16 +85,16 @@ C-n` or `C-<space>`
 
 You can create multiple keybinds for the same command using an array
 of `KEYSTR`:
+
 ```toml
 [keybindings]
 command1 = ["KEYSTR1", "KEYSTR2"]
 ```
 
-
 ### List of commands and defaults
 
 | Command name        | Explanation                                        | default       | dvorak set | qwerty set |
-|---------------------|----------------------------------------------------|---------------|------------|------------|
+| ------------------- | -------------------------------------------------- | ------------- | ---------- | ---------- |
 | `up`                | move up                                            | `<up>`        | t          | k          |
 | `down`              | move down                                          | `<down>`      | h          | j          |
 | `left`              | move left                                          | `<left>`      | d          | h          |
