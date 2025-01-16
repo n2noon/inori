@@ -94,7 +94,7 @@ command1 = ["KEYSTR1", "KEYSTR2"]
 ### List of commands and defaults
 
 | Command name        | Explanation                                        | default       | dvorak set | qwerty set |
-| ------------------- | -------------------------------------------------- | ------------- | ---------- | ---------- |
+|---------------------|----------------------------------------------------|---------------|------------|------------|
 | `up`                | move up                                            | `<up>`        | t          | k          |
 | `down`              | move down                                          | `<down>`      | h          | j          |
 | `left`              | move left                                          | `<left>`      | d          | h          |
@@ -120,6 +120,7 @@ command1 = ["KEYSTR1", "KEYSTR2"]
 | `toggle_single`     | toggle single                                      | s             |            |            |
 | `toggle_consume`    | toggle consume                                     | c             |            |            |
 | `toggle_random`     | toggle random                                      | z             |            |            |
+| `update_db`         | update mpd db                                      | u             |            |            |
 | `top`               | jump to top                                        | `<home>`      | <          | g g        |
 | `bottom`            | jump to bottom                                     | `<end>`       | >          | G          |
 

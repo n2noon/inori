@@ -11,6 +11,7 @@ pub fn build_library(model: &mut Model) -> Result<()> {
         .conn
         .list_group_2(("albumartistsort".into(), "albumartist".into()))?;
 
+    model.library.contents.clear();
     for chunk in artists.chunk_by(|_a, b| b.0 == "AlbumArtistSort") {
         if let Some(albumartist) = chunk.first().map(|i| i.1.clone()) {
             model.library.contents.push(ArtistData::from_names(
@@ -19,11 +20,13 @@ pub fn build_library(model: &mut Model) -> Result<()> {
             ));
         }
     }
+    // sort by sort name
     model.library.contents.sort_by(|a, b| {
         let a_name = a.sort_names.first().unwrap_or(&a.name);
         let b_name = b.sort_names.first().unwrap_or(&a.name);
         a_name.to_lowercase().cmp(&b_name.to_lowercase())
     });
+    model.library.contents.shrink_to_fit();
     Ok(())
 }
 

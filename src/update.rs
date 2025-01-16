@@ -70,6 +70,7 @@ pub enum Message {
     NextSong,
     PreviousSong,
     Seek(SeekDirection),
+    UpdateDB,
     Select,
     SwitchState(State),
     SwitchScreen(Screen),
@@ -171,6 +172,23 @@ pub fn handle_msg(model: &mut Model, m: Message) -> Result<Update> {
         }
         Message::SwitchScreen(to) => {
             model.screen = to;
+            Ok(Update::empty())
+        }
+        Message::UpdateDB => {
+            let id = model.conn.update()?;
+            loop {
+                // hang until finished updating (this update job)
+                if model
+                    .conn
+                    .status()
+                    .ok()
+                    .and_then(|i| i.updating_db)
+                    .is_none_or(|i| i != id)
+                {
+                    break;
+                }
+            }
+            build_library::build_library(model)?;
             Ok(Update::empty())
         }
         Message::PlayPause => {

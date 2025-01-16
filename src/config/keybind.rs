@@ -24,6 +24,7 @@ pub fn get_message(s: &str) -> Option<Message> {
         "left" => Some(Message::Direction(Dirs::Horiz(Horizontal::Left))),
         "right" => Some(Message::Direction(Dirs::Horiz(Horizontal::Right))),
         "toggle_playpause" => Some(Message::PlayPause),
+        "update_db" => Some(Message::UpdateDB),
         "select" => Some(Message::Select),
         "quit" => Some(Message::SwitchState(State::Done)),
         "switch_to_library" => Some(Message::SwitchScreen(Screen::Library)),
@@ -123,6 +124,8 @@ impl KeybindMap {
             KeyEvent::new(KeyCode::Char('c'), EMPTY),
             Msg(Set(Toggle::Consume)),
         );
+        keybindings
+            .insert(KeyEvent::new(KeyCode::Char('u'), EMPTY), Msg(UpdateDB));
         Self(keybindings)
     }
     pub fn with_dvorak_style(mut self) -> Self {
