@@ -13,7 +13,12 @@
     eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        formatters = [ pkgs.cargo pkgs.rustfmt pkgs.nixpkgs-fmt ];
+        formatters = [
+          pkgs.cargo
+          pkgs.rustfmt
+          pkgs.nixpkgs-fmt
+          pkgs.nodePackages.prettier
+        ];
         linters = [ pkgs.clippy pkgs.statix ];
       in
       {
@@ -28,6 +33,7 @@
           runtimeInputs = formatters;
           text = ''
             cargo fmt
+            prettier --write "$@"
             nixpkgs-fmt "$@"
           '';
         };
@@ -43,6 +49,7 @@
             cargo check
             cargo clippy
             cargo test
+            prettier --check .
             nixpkgs-fmt --check .
             statix check
           '';
