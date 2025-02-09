@@ -2,6 +2,7 @@
 name = "inori"
 version = "0.2.3"
 edition = "2021"
+rust-version = "1.82"
 authors = ["esrh <esrh@esrh.me>"]
 description = "mpd client"
 homepage = "https://github.com/eshrh/inori"
