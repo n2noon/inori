@@ -173,7 +173,7 @@ dependencies = [
 
 [[package]]
 name = "inori"
-version = "0.2.3"
+version = "0.2.4"
 dependencies = [
  "bitflags",
  "dirs",
@@ -186,9 +186,9 @@ dependencies = [
 
 [[package]]
 name = "inori-mpd"
-version = "0.2.1"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5ec4839ddc212db08dc1bee7b60265442cdbc6daf6b40e58957a6fa7829a55ed"
+checksum = "a12ad4d5a500546b58fa9f4654a5852a37a40a48909988e5fbd22bfc9f6b8bbd"
 dependencies = [
  "bufstream",
  "dirs",
