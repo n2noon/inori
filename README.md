@@ -32,12 +32,12 @@ Client for the Music Player Daemon ([MPD](https://www.musicpd.org/)).
 - Queue viewer and manipulation interface
 - Configurable, chainable keybindings
 
-## Usage/Installation
+## Installation & Usage
+Inori is on crates.io: `cargo install inori`.
 
-Run `cargo install inori`. inori is published on [crates.io](https://crates.io/crates/inori).
-
-inori is also available on the AUR as [inori](https://aur.archlinux.org/packages/inori).
-The PKGBUILD includes an option to switch between qwerty and dvorak defaults.
+Inori is also available on:
+- AUR as [inori](https://aur.archlinux.org/packages/inori) [maintained by @eshrh].
+- Nixpkgs unstable as [inori](https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/in/inori/package.nix) [maintained by @stephen-huan and @esrh]
 
 See [configuration.md](./CONFIGURATION.md) for config options, as well
 as a full list of all default keybindings.
