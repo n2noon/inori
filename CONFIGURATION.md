@@ -1,8 +1,9 @@
 # Configuration
 
-The config file is read from `<dirs::config_dir()>/inori/config.toml`.
-On GNU/Linux, this is `$XDG_CONFIG_HOME/inori/config.toml` or `$HOME/.config/inori/config.toml`.
-For other operating systems, check the [dirs documentation](https://docs.rs/dirs/6.0.0/dirs/).
+The config file is read from `<config_dir>/inori/config.toml`.
+On GNU/Linux and macOS, this is `$XDG_CONFIG_HOME/inori/config.toml` or `$HOME/.config/inori/config.toml`.
+For other operating systems, check the
+[platform-dirs documentation](https://docs.rs/platform-dirs/latest/platform_dirs/).
 
 ## General
 

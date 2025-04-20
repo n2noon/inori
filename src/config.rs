@@ -1,10 +1,9 @@
-extern crate dirs;
 use crate::model::*;
 use crate::view::Theme;
+use platform_dirs::AppDirs;
 use ratatui::style::Modifier;
 use ratatui::style::Style;
 use std::fs;
-use std::path::PathBuf;
 use toml::Table;
 use toml::Value;
 pub mod keybind;
@@ -27,11 +26,11 @@ impl Config {
         }
     }
     pub fn try_read_config(mut self) -> Self {
-        let path = dirs::config_dir().map(|mut p| {
-            p.push(PathBuf::from_iter(["inori", "config.toml"]));
-            p
-        });
-        if let Some(Ok(contents)) = path.map(fs::read_to_string) {
+        let app_dirs = AppDirs::new(Some("inori"), true);
+        let config_file_path =
+            app_dirs.map(|d| d.config_dir.join("config.toml"));
+
+        if let Some(Ok(contents)) = config_file_path.map(fs::read_to_string) {
             let toml = contents.parse::<Table>().expect("failed to parse toml");
             for (key, value) in toml {
                 match (key.as_str(), value) {
