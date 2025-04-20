@@ -1,4 +1,3 @@
-use mpd::Subsystem;
 use crate::config::keybind::{KeybindMap, KeybindTarget};
 use crate::event_handler::Result;
 use crate::model::proto::Searchable;
@@ -6,6 +5,7 @@ use crate::model::{Model, Screen, State};
 use crate::util::{safe_decrement, safe_increment};
 use bitflags::bitflags;
 use mpd::status::State as PlayState;
+use mpd::Subsystem;
 use ratatui::crossterm::event::{self, KeyCode, KeyEvent};
 use std::option::Option;
 use std::time::Duration;
@@ -98,7 +98,9 @@ pub fn update_screens(model: &mut Model, mut update: Update) -> Result<()> {
         if changes.contains(&Subsystem::Database) {
             build_library::build_library(model)?;
         }
-        if changes.contains(&Subsystem::Update) || changes.contains(&Subsystem::Options) {
+        if changes.contains(&Subsystem::Update)
+            || changes.contains(&Subsystem::Options)
+        {
             update |= Update::STATUS;
         }
     }

@@ -124,11 +124,7 @@ impl Model {
         let mut conn = Self::make_connection(&config);
         let idle_conn = IdleClient::new(
             Self::make_connection(&config),
-            &[
-                Subsystem::Database,
-                Subsystem::Player,
-                Subsystem::Options
-            ]
+            &[Subsystem::Database, Subsystem::Player, Subsystem::Options],
         )?;
         Ok(Model {
             state: State::Running,

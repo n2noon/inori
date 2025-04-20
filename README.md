@@ -33,9 +33,11 @@ Client for the Music Player Daemon ([MPD](https://www.musicpd.org/)).
 - Configurable, chainable keybindings
 
 ## Installation & Usage
+
 Inori is on crates.io: `cargo install inori`.
 
 Inori is also available on:
+
 - AUR as [inori](https://aur.archlinux.org/packages/inori) [maintained by @eshrh].
 - Nixpkgs unstable as [inori](https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/in/inori/package.nix) [maintained by @stephen-huan and @eshrh]
 
