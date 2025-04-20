@@ -102,7 +102,7 @@ pub fn render_track_list(
             }
             .title("Tracks"),
         )
-        .highlight_style(match model.library.active {
+        .row_highlight_style(match model.library.active {
             ArtistSelector => theme.item_highlight_inactive,
             TrackSelector => theme.item_highlight_active,
         })

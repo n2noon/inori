@@ -71,7 +71,7 @@ pub fn make_queue<'a>(model: &mut Model, theme: &Theme) -> Table<'a> {
         rows,
         vec![Percentage(50), Percentage(30), Percentage(20), Min(5)],
     )
-    .highlight_style(theme.item_highlight_active)
+    .row_highlight_style(theme.item_highlight_active)
     .block(Block::bordered().title("Queue"));
 
     table
@@ -81,7 +81,7 @@ pub fn render(model: &mut Model, frame: &mut Frame, theme: &Theme) {
     let layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints(vec![Max(4), Min(1), Max(3)])
-        .split(frame.size());
+        .split(frame.area());
     let queue_and_search =
         Layout::vertical(vec![Max(3), Min(1)]).split(layout[1]);
 

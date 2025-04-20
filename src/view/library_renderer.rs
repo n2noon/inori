@@ -88,7 +88,7 @@ pub fn render_global_search(
 }
 
 pub fn render(model: &mut Model, frame: &mut Frame, theme: &Theme) {
-    let layout = Layout::vertical(vec![Max(4), Min(1)]).split(frame.size());
+    let layout = Layout::vertical(vec![Max(4), Min(1)]).split(frame.area());
     let menu_layout =
         Layout::horizontal(vec![Ratio(1, 3), Ratio(2, 3)]).split(layout[1]);
     let header_layout = Layout::horizontal(vec![Ratio(1, 1)]).split(layout[0]);
@@ -101,7 +101,7 @@ pub fn render(model: &mut Model, frame: &mut Frame, theme: &Theme) {
         Percentage(60),
         Percentage(20),
     ])
-    .split(frame.size());
+    .split(frame.area());
 
     let center_popup_v =
         Layout::vertical(vec![Percentage(20), Percentage(60), Percentage(20)])
@@ -110,9 +110,9 @@ pub fn render(model: &mut Model, frame: &mut Frame, theme: &Theme) {
 
     if model
         .window_height
-        .is_some_and(|i| i != frame.size().height.into())
+        .is_some_and(|i| i != frame.area().height.into())
     {
-        model.window_height = Some(frame.size().height.into());
+        model.window_height = Some(frame.area().height.into());
     }
 
     render_status(model, frame, header_layout[0], theme);
